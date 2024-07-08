@@ -17,6 +17,7 @@ class ProductImages extends StatefulWidget {
 
 class _ProductImagesState extends State<ProductImages> {
   int selectedImage = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,15 +26,15 @@ class _ProductImagesState extends State<ProductImages> {
           width: 238,
           child: AspectRatio(
             aspectRatio: 1,
-            child: Image.asset(widget.product.images[selectedImage]),
+            child: Image.asset(widget.product.images[selectedImage]), // Use images list
           ),
         ),
-        // SizedBox(height: 20),
+        SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ...List.generate(
-              widget.product.images.length,
+              widget.product.images.length, // Use images list
               (index) => SmallProductImage(
                 isSelected: index == selectedImage,
                 press: () {
@@ -41,7 +42,7 @@ class _ProductImagesState extends State<ProductImages> {
                     selectedImage = index;
                   });
                 },
-                image: widget.product.images[index],
+                image: widget.product.images[index], // Use images list
               ),
             ),
           ],
@@ -51,26 +52,22 @@ class _ProductImagesState extends State<ProductImages> {
   }
 }
 
-class SmallProductImage extends StatefulWidget {
-  const SmallProductImage(
-      {super.key,
-      required this.isSelected,
-      required this.press,
-      required this.image});
+class SmallProductImage extends StatelessWidget {
+  const SmallProductImage({
+    Key? key,
+    required this.isSelected,
+    required this.press,
+    required this.image,
+  }) : super(key: key);
 
   final bool isSelected;
   final VoidCallback press;
   final String image;
 
   @override
-  State<SmallProductImage> createState() => _SmallProductImageState();
-}
-
-class _SmallProductImageState extends State<SmallProductImage> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.press,
+      onTap: press,
       child: AnimatedContainer(
         duration: defaultDuration,
         margin: const EdgeInsets.only(right: 16),
@@ -81,9 +78,9 @@ class _SmallProductImageState extends State<SmallProductImage> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-              color: kPrimaryColor.withOpacity(widget.isSelected ? 1 : 0)),
+              color: kPrimaryColor.withOpacity(isSelected ? 1 : 0)),
         ),
-        child: Image.asset(widget.image),
+        child: Image.asset(image),
       ),
     );
   }

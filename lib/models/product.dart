@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Product {
-  final int id;
+  final String id;
   final String title, description;
   final List<String> images;
   final List<Color> colors;
   final double rating, price;
   final bool isFavourite, isPopular;
+  int quantity;
 
   Product({
     required this.id,
@@ -18,6 +19,7 @@ class Product {
     required this.title,
     required this.price,
     required this.description,
+    required this.quantity,
   });
 }
 
@@ -25,13 +27,13 @@ class Product {
 
 List<Product> demoProducts = [
   Product(
-    id: 1,
+    id: "1",
     images: [
       "assets/images/ps4_console_white_1.png",
       "assets/images/ps4_console_white_2.png",
       "assets/images/ps4_console_white_3.png",
       "assets/images/ps4_console_white_4.png",
-    ],
+      ],
     colors: [
       const Color(0xFFF6625E),
       const Color(0xFF836DB8),
@@ -44,12 +46,11 @@ List<Product> demoProducts = [
     rating: 4.8,
     isFavourite: true,
     isPopular: true,
+    quantity: 1,
   ),
   Product(
-    id: 2,
-    images: [
-      "assets/images/Image Popular Product 2.png",
-    ],
+    id: "2",
+    images: ["assets/images/Image Popular Product 2.png"],
     colors: [
       const Color(0xFFF6625E),
       const Color(0xFF836DB8),
@@ -61,12 +62,11 @@ List<Product> demoProducts = [
     description: description,
     rating: 4.1,
     isPopular: true,
+    quantity: 1,
   ),
   Product(
-    id: 3,
-    images: [
-      "assets/images/glap.png",
-    ],
+    id: "3",
+    images: ["assets/images/glap.png"],
     colors: [
       const Color(0xFFF6625E),
       const Color(0xFF836DB8),
@@ -79,12 +79,11 @@ List<Product> demoProducts = [
     rating: 4.1,
     isFavourite: true,
     isPopular: true,
+    quantity: 1,
   ),
   Product(
-    id: 4,
-    images: [
-      "assets/images/wireless headset.png",
-    ],
+    id: "4",
+    images: ["assets/images/wireless headset.png"],
     colors: [
       const Color(0xFFF6625E),
       const Color(0xFF836DB8),
@@ -96,15 +95,16 @@ List<Product> demoProducts = [
     description: description,
     rating: 4.1,
     isFavourite: true,
+    quantity: 1,
   ),
   Product(
-    id: 1,
+    id: "5",
     images: [
       "assets/images/ps4_console_white_1.png",
       "assets/images/ps4_console_white_2.png",
       "assets/images/ps4_console_white_3.png",
       "assets/images/ps4_console_white_4.png",
-    ],
+      ],
     colors: [
       const Color(0xFFF6625E),
       const Color(0xFF836DB8),
@@ -117,12 +117,11 @@ List<Product> demoProducts = [
     rating: 4.8,
     isFavourite: true,
     isPopular: true,
+    quantity: 1,
   ),
   Product(
-    id: 2,
-    images: [
-      "assets/images/Image Popular Product 2.png",
-    ],
+    id: "6",
+    images: ["assets/images/Image Popular Product 2.png"],
     colors: [
       const Color(0xFFF6625E),
       const Color(0xFF836DB8),
@@ -134,12 +133,11 @@ List<Product> demoProducts = [
     description: description,
     rating: 4.1,
     isPopular: true,
+    quantity: 1,
   ),
   Product(
-    id: 3,
-    images: [
-      "assets/images/glap.png",
-    ],
+    id: "7",
+    images: ["assets/images/glap.png"],
     colors: [
       const Color(0xFFF6625E),
       const Color(0xFF836DB8),
@@ -152,12 +150,11 @@ List<Product> demoProducts = [
     rating: 4.1,
     isFavourite: true,
     isPopular: true,
+    quantity: 1,
   ),
   Product(
-    id: 4,
-    images: [
-      "assets/images/wireless headset.png",
-    ],
+    id: "8",
+    images: ["assets/images/wireless headset.png"],
     colors: [
       const Color(0xFFF6625E),
       const Color(0xFF836DB8),
@@ -169,6 +166,7 @@ List<Product> demoProducts = [
     description: description,
     rating: 4.1,
     isFavourite: true,
+    quantity: 1,
   ),
 ];
 

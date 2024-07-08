@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../models/product.dart';
+import '../provider/favorite_provider.dart';
+import '../provider/cart_provider.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
@@ -19,6 +22,9 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final favoriteProvider = Provider.of<FavoriteProvider>(context);
+    final isFavorite = favoriteProvider.isFavorite(product);
+
     return SizedBox(
       width: width,
       child: GestureDetector(
@@ -27,7 +33,7 @@ class ProductCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AspectRatio(
-              aspectRatio: 1.02,
+              aspectRatio: aspectRetio,
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
@@ -54,28 +60,55 @@ class ProductCard extends StatelessWidget {
                     color: kPrimaryColor,
                   ),
                 ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(50),
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(6),
-                    height: 24,
-                    width: 24,
-                    decoration: BoxDecoration(
-                      color: product.isFavourite
-                          ? kPrimaryColor.withOpacity(0.15)
-                          : kSecondaryColor.withOpacity(0.1),
-                      shape: BoxShape.circle,
+                Row(
+                  children: [
+                    InkWell(
+                      borderRadius: BorderRadius.circular(50),
+                      onTap: () {
+                        Provider.of<CartProvider>(context, listen: false).addProduct(product);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        height: 24,
+                        width: 24,
+                        decoration: BoxDecoration(
+                          color: kPrimaryColor.withOpacity(0.15),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.add_shopping_cart,
+                          color: kPrimaryColor,
+                          size: 16,
+                        ),
+                      ),
                     ),
-                    child: SvgPicture.asset(
-                      "assets/icons/Heart Icon_2.svg",
-                      colorFilter: ColorFilter.mode(
-                          product.isFavourite
-                              ? const Color(0xFFFF4848)
-                              : const Color(0xFFDBDEE4),
-                          BlendMode.srcIn),
+                    const SizedBox(width: 8),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(50),
+                      onTap: () {
+                        favoriteProvider.toggleFavoriteStatus(product);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        height: 24,
+                        width: 24,
+                        decoration: BoxDecoration(
+                          color: isFavorite
+                              ? kPrimaryColor.withOpacity(0.15)
+                              : kSecondaryColor.withOpacity(0.1),
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/icons/Heart Icon_2.svg",
+                          colorFilter: ColorFilter.mode(
+                              isFavorite
+                                  ? const Color(0xFFFF4848)
+                                  : const Color(0xFFDBDEE4),
+                              BlendMode.srcIn),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             )

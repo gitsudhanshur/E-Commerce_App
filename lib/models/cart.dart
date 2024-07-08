@@ -1,16 +1,22 @@
-import 'product.dart';
+import 'package:e_commerce_app/models/product.dart';
 
 class Cart {
   final Product product;
-  final int numOfItem;
+  int quantity;
 
-  Cart({required this.product, required this.numOfItem});
+  Cart({
+    required this.product,
+    this.quantity = 1,
+  });
+
+  // Optionally, you can add methods to update the quantity
+  void incrementQuantity() {
+    quantity++;
+  }
+
+  void decrementQuantity() {
+    if (quantity > 1) {
+      quantity--;
+    }
+  }
 }
-
-// Demo data for our cart
-
-List<Cart> demoCarts = [
-  Cart(product: demoProducts[0], numOfItem: 2),
-  Cart(product: demoProducts[1], numOfItem: 1),
-  Cart(product: demoProducts[3], numOfItem: 1),
-];

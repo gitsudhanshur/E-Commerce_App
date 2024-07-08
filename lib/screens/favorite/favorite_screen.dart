@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:e_commerce_app/components/product_card.dart';
-import 'package:e_commerce_app/models/product.dart';
-
+import 'package:e_commerce_app/provider/favorite_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../details/details_screen.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -9,6 +9,9 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final favoriteProvider = Provider.of<FavoriteProvider>(context);
+    final favoriteProducts = favoriteProvider.favorites;
+
     return SafeArea(
       child: Column(
         children: [
@@ -20,7 +23,7 @@ class FavoriteScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: GridView.builder(
-                itemCount: demoProducts.length,
+                itemCount: favoriteProducts.length,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 200,
                   childAspectRatio: 0.7,
@@ -28,12 +31,12 @@ class FavoriteScreen extends StatelessWidget {
                   crossAxisSpacing: 16,
                 ),
                 itemBuilder: (context, index) => ProductCard(
-                  product: demoProducts[index],
+                  product: favoriteProducts[index],
                   onPress: () => Navigator.pushNamed(
                     context,
                     DetailsScreen.routeName,
-                    arguments:
-                        ProductDetailsArguments(product: demoProducts[index]),
+                    arguments: ProductDetailsArguments(
+                        product: favoriteProducts[index]),
                   ),
                 ),
               ),
