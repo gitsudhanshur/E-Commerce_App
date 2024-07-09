@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/screens/products/fashions_screen.dart';
+import 'package:e_commerce_app/screens/products/smartphones_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:e_commerce_app/screens/products/products_screen.dart';
 
@@ -30,4 +32,6 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => const DetailsScreen(),
   CartScreen.routeName: (context) => const CartScreen(),
   ProfileScreen.routeName: (context) => const ProfileScreen(),
+  SmartphonesScreen.routeName: (context) => const SmartphonesScreen(),
+  FashionsScreen.routeName: (context) => const FashionsScreen(),
 };

@@ -1,5 +1,6 @@
+import 'package:e_commerce_app/screens/products/fashions_screen.dart';
+import 'package:e_commerce_app/screens/products/smartphones_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/screens/products/products_screen.dart';
 
 import 'section_title.dart';
 
@@ -26,17 +27,17 @@ class SpecialOffers extends StatelessWidget {
               SpecialOfferCard(
                 image: "assets/images/Image Banner 2.png",
                 category: "Smartphone",
-                numOfBrands: 18,
+                numOfBrands: 10,
                 press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
+                  Navigator.pushNamed(context, SmartphonesScreen.routeName);
                 },
               ),
               SpecialOfferCard(
                 image: "assets/images/Image Banner 3.png",
                 category: "Fashion",
-                numOfBrands: 24,
+                numOfBrands: 10,
                 press: () {
-                  Navigator.pushNamed(context, ProductsScreen.routeName);
+                  Navigator.pushNamed(context, FashionsScreen.routeName);
                 },
               ),
               const SizedBox(width: 20),
