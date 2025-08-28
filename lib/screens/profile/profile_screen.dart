@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'components/profile_menu.dart';
 import 'components/profile_pic.dart';
 
@@ -7,6 +7,13 @@ class ProfileScreen extends StatelessWidget {
   static String routeName = "/profile";
 
   const ProfileScreen({super.key});
+
+  Future<void> signOut(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    // After sign out, navigate to Sign In screen
+    Navigator.pushReplacementNamed(context, "/sign_in");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenu(
               text: "My Account",
               icon: "assets/icons/User Icon.svg",
-              press: () => {},
+              press: () {},
             ),
             ProfileMenu(
               text: "Notifications",
@@ -42,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenu(
               text: "Log Out",
               icon: "assets/icons/Log out.svg",
-              press: () {},
+              press: () => signOut(context),
             ),
           ],
         ),

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../components/custom_surfix_icon.dart';
-import '../../../components/form_error.dart';
 import '../../../constants.dart';
-import '../../../helper/keyboard.dart';
 import '../../forgot_password/forgot_password_screen.dart';
-import '../../login_success/login_success_screen.dart';
 
 class SignForm extends StatefulWidget {
   const SignForm({super.key});
@@ -16,24 +14,29 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
-  String? password;
+  String email = "";
+  String password = "";
+  bool isLoading = false;
   bool? remember = false;
-  final List<String?> errors = [];
 
-  void addError({String? error}) {
-    if (!errors.contains(error)) {
-      setState(() {
-        errors.add(error);
-      });
-    }
-  }
+  Future<void> signIn() async {
+    if (!_formKey.currentState!.validate()) return;
+    _formKey.currentState!.save();
+    setState(() => isLoading = true);
 
-  void removeError({String? error}) {
-    if (errors.contains(error)) {
-      setState(() {
-        errors.remove(error);
-      });
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      // Navigate to Home after successful login
+      Navigator.pushReplacementNamed(context, "/");
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.message ?? "Login failed")),
+      );
+    } finally {
+      setState(() => isLoading = false);
     }
   }
 
@@ -44,65 +47,22 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            onSaved: (newValue) => email = newValue,
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kEmailNullError);
-              } else if (emailValidatorRegExp.hasMatch(value)) {
-                removeError(error: kInvalidEmailError);
-              }
-              return;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kEmailNullError);
-                return "";
-              } else if (!emailValidatorRegExp.hasMatch(value)) {
-                addError(error: kInvalidEmailError);
-                return "";
-              }
-              return null;
-            },
             decoration: const InputDecoration(
               labelText: "Email",
-              hintText: "Enter your email",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
-            ),
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),),
+            onSaved: (value) => email = value!,
+            validator: (value) =>
+                value!.isEmpty ? "Please enter email" : null,
           ),
           const SizedBox(height: 20),
           TextFormField(
-            obscureText: true,
-            onSaved: (newValue) => password = newValue,
-            onChanged: (value) {
-              if (value.isNotEmpty) {
-                removeError(error: kPassNullError);
-              } else if (value.length >= 8) {
-                removeError(error: kShortPassError);
-              }
-              return;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                addError(error: kPassNullError);
-                return "";
-              } else if (value.length < 8) {
-                addError(error: kShortPassError);
-                return "";
-              }
-              return null;
-            },
             decoration: const InputDecoration(
               labelText: "Password",
-              hintText: "Enter your password",
-              // If  you are using latest version of flutter then lable text and hint text shown like this
-              // if you r using flutter less then 1.20.* then maybe this is not working properly
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-            ),
+              suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),),
+            obscureText: true,
+            onSaved: (value) => password = value!,
+            validator: (value) =>
+                value!.isEmpty ? "Please enter password" : null,
           ),
           const SizedBox(height: 20),
           Row(
@@ -128,19 +88,12 @@ class _SignFormState extends State<SignForm> {
               )
             ],
           ),
-          FormError(errors: errors),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-              }
-            },
-            child: const Text("Continue"),
-          ),
+          isLoading
+              ? const CircularProgressIndicator()
+              : ElevatedButton(
+                  onPressed: signIn,
+                  child: const Text("Sign In"),
+                ),
         ],
       ),
     );
