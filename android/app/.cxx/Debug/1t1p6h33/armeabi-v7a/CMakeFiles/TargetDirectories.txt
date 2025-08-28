@@ -1,0 +1,2 @@
+C:/Users/Pavilion/Desktop/E-Commerce_App/android/app/.cxx/Debug/1t1p6h33/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Pavilion/Desktop/E-Commerce_App/android/app/.cxx/Debug/1t1p6h33/armeabi-v7a/CMakeFiles/rebuild_cache.dir
