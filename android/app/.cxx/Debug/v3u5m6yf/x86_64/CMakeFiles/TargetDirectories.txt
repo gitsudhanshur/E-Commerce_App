@@ -1,0 +1,2 @@
+C:/Users/Pavilion/Desktop/E-Commerce_App-1/android/app/.cxx/Debug/v3u5m6yf/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Pavilion/Desktop/E-Commerce_App-1/android/app/.cxx/Debug/v3u5m6yf/x86_64/CMakeFiles/rebuild_cache.dir
